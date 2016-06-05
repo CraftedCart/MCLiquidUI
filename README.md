@@ -1,5 +1,5 @@
-Minecraft FluidUI
-=================
+Minecraft LiquidUI
+==================
 
 A better UI system for Minecraft Forge.
 
