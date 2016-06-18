@@ -32,3 +32,9 @@ Debug mode is enabled by pressing F3 - Highlight components by mousing over a co
 
 ![Power Statistics](http://i.imgur.com/xhKtcS7.png)
 Power Statistics
+
+### Legal
+
+See LICENCE.txt for more.
+
+The Font Roboto (Roboto-Regular.ttf) is exempt from the GNU Lesser General Public License v2.1. That Google Font is under the Apache License, version 2.0.  

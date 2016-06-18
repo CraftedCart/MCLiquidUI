@@ -1,13 +1,13 @@
 package io.github.craftedcart.mcliquidui.component;
 
-import io.github.craftedcart.mcliquidui.util.AnchorPoint;
-import io.github.craftedcart.mcliquidui.util.MathUtils;
-import io.github.craftedcart.mcliquidui.util.PosXY;
+import io.github.craftedcart.mcliquidui.util.*;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 /**
- * Created by CraftedCart on 06/02/2016 (DD/MM/YYYY)
+ * Created by CraftedCart on 06/02/2016 (DD/MM/YYYY)<br>
+ * <br>
+ * Like a regular slider, but with two handles
  */
 public class UIDualSlider extends UIComponent {
 
@@ -19,13 +19,24 @@ public class UIDualSlider extends UIComponent {
     public double currentMinValue;
     public double currentMaxValue;
     public double decimalPlaces = 9;
-    private byte selectedHandle = -1;
-    /*
+    /**
      * -1: No handle selected selected
      *  0: Min (Left) handle selected
      *  1: Max (Right) handle selected
      */
+    private byte selectedHandle = -1;
 
+    /**
+     * Create a new UIDualSlider by calling this<br>
+     * The component will automatically register itself with the parentComponent provided
+     *
+     * @param parentComponent The {@link UIComponent} which the component will get registered to
+     * @param name The name of the component
+     * @param topLeftPoint The top left point of the component
+     * @param bottomRightPoint The bottom right point of the component
+     * @param topLeftAnchor The top left anchor point of the component
+     * @param bottomRightAnchor The bottom right anchor point of the component
+     */
     public UIDualSlider(UIComponent parentComponent, String name, PosXY topLeftPoint, PosXY bottomRightPoint,
                         AnchorPoint topLeftAnchor, AnchorPoint bottomRightAnchor) {
         super(parentComponent, name, topLeftPoint, bottomRightPoint,
@@ -50,6 +61,9 @@ public class UIDualSlider extends UIComponent {
                 new AnchorPoint(1, 1));
     }
 
+    /**
+     * This is called every frame
+     */
     @Override
     protected void onUpdate() {
         super.onUpdate();
@@ -91,6 +105,24 @@ public class UIDualSlider extends UIComponent {
 
     }
 
+    /**
+     * This is called every frame to call the {@link UIComponent#onUpdate()} method of all children after this
+     * component is done drawing.<br>
+     * <br>
+     * This is only called if this component is visible.
+     */
+    @Override
+    protected void updateChildren() {
+        GuiUtils.setupStencilMask();
+        GuiUtils.drawQuad(topLeftPx, bottomRightPx, UIColor.pureWhite());
+        GuiUtils.setupStencilDraw();
+        super.updateChildren();
+        GuiUtils.setupStencilEnd();
+    }
+
+    /**
+     * @param currentMinValue Sets the min / left slider value
+     */
     public void setCurrentMinValue(double currentMinValue) {
         double rounded = Math.max(Math.round(currentMinValue * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces), minValue);
 
@@ -102,6 +134,9 @@ public class UIDualSlider extends UIComponent {
         selectedArea.topLeftAnchor = new AnchorPoint(percent, 0);
     }
 
+    /**
+     * @param currentMaxValue The max / right slider value
+     */
     public void setCurrentMaxValue(double currentMaxValue) {
         double rounded = Math.min(Math.round(currentMaxValue * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces), maxValue);
 
@@ -113,6 +148,9 @@ public class UIDualSlider extends UIComponent {
         selectedArea.bottomRightAnchor = new AnchorPoint(percent, 1);
     }
 
+    /**
+     * @param decimalPlaces The decimal places to use for calculating precision
+     */
     public void setDecimalPlaces(double decimalPlaces) {
         this.decimalPlaces = decimalPlaces;
 

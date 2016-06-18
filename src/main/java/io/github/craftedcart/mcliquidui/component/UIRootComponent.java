@@ -104,6 +104,21 @@ public class UIRootComponent extends UIComponent {
 
     }
 
+    /**
+     * This is called every frame to call the {@link UIComponent#onUpdate()} method of all children after this
+     * component is done drawing.<br>
+     * <br>
+     * This is only called if this component is visible.
+     */
+    @Override
+    protected void updateChildren() {
+        GuiUtils.setupStencilMask();
+        GuiUtils.drawQuad(topLeftPx, bottomRightPx, UIColor.pureWhite());
+        GuiUtils.setupStencilDraw();
+        super.updateChildren();
+        GuiUtils.setupStencilEnd();
+    }
+
     private void drawDebug() {
         final int w = Display.getWidth();
         final int h = Display.getHeight();
@@ -259,6 +274,12 @@ public class UIRootComponent extends UIComponent {
         //</editor-fold>
     }
 
+    /**
+     * Draws orange boxes over the component given, or red boxes if it is a child component
+     *
+     * @param component The component to draw the overlay on
+     * @param isChildComponent Is the component a child one of the initial one? If so, change the color of the box drawn
+     */
     protected void drawDebugOverlayOnComponentAndChildren(UIComponent component, boolean isChildComponent) {
         if (isChildComponent) {
             GuiUtils.drawQuad(

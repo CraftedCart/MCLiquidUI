@@ -23,12 +23,26 @@ public class UITextField extends UIComponent {
     public UIAction onTabAction;
     public UIAction onReturnAction;
 
+    /**
+     * Create a new UITextField by calling this<br>
+     * The component will automatically register itself with the parentComponent provided
+     *
+     * @param parentComponent The {@link UIComponent} which the component will get registered to
+     * @param name The name of the component
+     * @param topLeftPoint The top left point of the component
+     * @param bottomRightPoint The bottom right point of the component
+     * @param topLeftAnchor The top left anchor point of the component
+     * @param bottomRightAnchor The bottom right anchor point of the component
+     */
     public UITextField(UIComponent parentComponent, String name, PosXY topLeftPoint, PosXY bottomRightPoint,
                        AnchorPoint topLeftAnchor, AnchorPoint bottomRightAnchor) {
         super(parentComponent, name, topLeftPoint, bottomRightPoint,
                 topLeftAnchor, bottomRightAnchor);
     }
 
+    /**
+     * This is called every frame
+     */
     @Override
     protected void onUpdate() {
         super.onUpdate();
@@ -226,22 +240,49 @@ public class UITextField extends UIComponent {
                 GuiUtils.drawString(GuiUtils.font, xPoint, (int) topLeftPx.y, value, textColor);
             }
         });
-        //</editor-fold> //To //TODO
+        //</editor-fold>
 
     }
 
+    /**
+     * This is called every frame to call the {@link UIComponent#onUpdate()} method of all children after this
+     * component is done drawing.<br>
+     * <br>
+     * This is only called if this component is visible.
+     */
+    @Override
+    protected void updateChildren() {
+        GuiUtils.setupStencilMask();
+        GuiUtils.drawQuad(topLeftPx, bottomRightPx, UIColor.pureWhite());
+        GuiUtils.setupStencilDraw();
+        super.updateChildren();
+        GuiUtils.setupStencilEnd();
+    }
+
+    /**
+     * @param placeholderText The placeholder text to use when the text field is empty
+     */
     public void setPlaceholderText(String placeholderText) {
         this.placeholderText = placeholderText;
     }
 
+    /**
+     * @param onTabAction An action to execute when the key tab is pressed
+     */
     public void setOnTabAction(UIAction onTabAction) {
         this.onTabAction = onTabAction;
     }
 
+    /**
+     * @param onReturnAction An action to execute when the key return is pressed
+     */
     public void setOnReturnAction(UIAction onReturnAction) {
         this.onReturnAction = onReturnAction;
     }
 
+    /**
+     * Sets the value of the text field to an empty string
+     */
     public void clearValue() {
         value = "";
         cursorPos = 0;

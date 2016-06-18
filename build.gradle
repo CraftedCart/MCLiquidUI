@@ -19,7 +19,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'maven-publish'
 
-version = "1.0.0-Minecraft1.8.9"
+version = "1.0.1-Minecraft1.8.9"
 group= "io.github.craftedcart.mcliquidui" //http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MCLiquidUI"
 
@@ -111,8 +111,8 @@ bintray {
         vcsUrl = 'https://github.com/craftedcart/MCLiquidUI.git'
 
         version {
-            name = '1.0.0-Minecraft1.8.9'
-            desc = 'MCLiquidUI v1.0.0 for Minecraft 1.8.9'
+            name = '1.0.1-Minecraft1.8.9'
+            desc = 'MCLiquidUI v1.0.1 for Minecraft 1.8.9'
             released  = new Date()
         }
     }
@@ -127,7 +127,7 @@ publishing {
             from components.java
             groupId 'io.github.craftedcart'
             artifactId 'mcfluidui'
-            version '1.0.0'
+            version '1.0.1'
         }
     }
 }

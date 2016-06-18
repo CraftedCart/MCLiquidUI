@@ -5,7 +5,9 @@ import io.github.craftedcart.mcliquidui.util.PosXY;
 import io.github.craftedcart.mcliquidui.util.UIColor;
 
 /**
- * Created by CraftedCart on 16/02/2016 (DD/MM/YYYY)
+ * Created by CraftedCart on 16/02/2016 (DD/MM/YYYY)<br>
+ * <br>
+ * Like a checkbox, its value can either be activated (true) or deactivated (false)
  */
 public class UIToggleBox extends UIButton {
 
@@ -13,20 +15,40 @@ public class UIToggleBox extends UIButton {
     public UIColor falseColor = UIColor.matRed();
     public UIColor trueColor = UIColor.matGreen();
 
+    /**
+     * Create a new UIToggleBox by calling this<br>
+     * The component will automatically register itself with the parentComponent provided
+     *
+     * @param parentComponent The {@link UIComponent} which the component will get registered to
+     * @param name The name of the component
+     * @param topLeftPoint The top left point of the component
+     * @param bottomRightPoint The bottom right point of the component
+     * @param topLeftAnchor The top left anchor point of the component
+     * @param bottomRightAnchor The bottom right anchor point of the component
+     */
     public UIToggleBox(UIComponent parentComponent, String name, PosXY topLeftPoint, PosXY bottomRightPoint,
                        AnchorPoint topLeftAnchor, AnchorPoint bottomRightAnchor) {
         super(parentComponent, name, topLeftPoint, bottomRightPoint,
                 topLeftAnchor, bottomRightAnchor);
     }
 
+    /**
+     * @param falseColor The color to use when the {@link UIToggleBox} is deactivated / false
+     */
     public void setFalseColor(UIColor falseColor) {
         this.falseColor = falseColor;
     }
 
+    /**
+     * @param trueColor The color to use when the {@link UIToggleBox} is activated / true
+     */
     public void setTrueColor(UIColor trueColor) {
         this.trueColor = trueColor;
     }
 
+    /**
+     * @param value True or false - Sets the value of this {@link UIToggleBox}
+     */
     public void setValue(boolean value) {
         this.value = value;
 

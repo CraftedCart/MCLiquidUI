@@ -1,0 +1,6 @@
+gui.mcliquidui:downloadingDeps=Downloading Dependencies
+gui.mcliquidui:downloadingDeps=Minecraft LiquidUI is now downloading dependencies
+gui.mcliquidui:downloadFailed=Download failed
+gui.mcliquidui:loadCannotContinue=Loading Minecraft cannot continue without the required dependencies for Minecraft LiquidUI
+gui.mcliquidui:quit=Quit
+gui.mcliquidui:manualInstall=Manual Installation Guide

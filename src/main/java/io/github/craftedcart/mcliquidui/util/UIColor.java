@@ -5,17 +5,40 @@ package io.github.craftedcart.mcliquidui.util;
  */
 public class UIColor {
 
+    /**
+     * Red value between 0 - 1
+     */
     public double r;
+    /**
+     * Green value between 0 - 1
+     */
     public double g;
+    /**
+     * Blue value between 0 - 1
+     */
     public double b;
+    /**
+     * Alpha value between 0 - 1
+     */
     public double a = 1;
 
+    /**
+     * @param r Red value between 0 - 255
+     * @param g Green value between 0 - 255
+     * @param b Blue value between 0 - 255
+     */
     public UIColor(double r, double g, double b) {
         this.r = r / 255;
         this.g = g / 255;
         this.b = b / 255;
     }
 
+    /**
+     * @param r Red value between 0 - 255
+     * @param g Green value between 0 - 255
+     * @param b Blue value between 0 - 255
+     * @param a Alpha value between 0 - 1
+     */
     public UIColor(double r, double g, double b, double a) {
         this.r = r / 255;
         this.g = g / 255;

@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by CraftedCart on 09/01/2016 (DD/MM/YYYY)
+ * Created by CraftedCart on 09/01/2016 (DD/MM/YYYY)<br>
+ * <br>
+ * Better than {@link GuiScreen}s!
  */
 public abstract class UIDisplay extends GuiScreen {
 
@@ -76,10 +78,16 @@ public abstract class UIDisplay extends GuiScreen {
         //No-Op
     }
 
+    /**
+     * @return The root component of this {@link UIDisplay}
+     */
     public UIRootComponent getRootComponent() {
         return rootComponent;
     }
 
+    /**
+     * Override me to add components to the UIDisplay when the GUI is opened!
+     */
     public void onInit() {
         Keyboard.enableRepeatEvents(true);
     }
