@@ -293,9 +293,9 @@ public class GuiUtils {
      * @param col The color of the text
      */
     public static void drawString(org.newdawn.slick.Font font, int x, int y, String string, UIColor col) {
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GlStateManager.enableTexture2D();
         font.drawString(x, y, string, new Color((float) col.r, (float) col.g, (float) col.b, (float) col.a));
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GlStateManager.disableTexture2D();
     }
 
     /**

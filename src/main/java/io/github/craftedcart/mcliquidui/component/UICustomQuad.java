@@ -48,7 +48,7 @@ public class UICustomQuad extends UIComponent {
      * This is called every frame
      */
     @Override
-    protected void onUpdate() {
+    public void onUpdate() {
         if (visible) {
             topRightPx = new PosXY(
                     parentComponent.width * bottomRightAnchor.xPercent + topRightPoint.x + parentComponent.topLeftPx.x + parentComponent.pointOffset.x,
@@ -70,7 +70,7 @@ public class UICustomQuad extends UIComponent {
      * This is only called if this component is visible.
      */
     @Override
-    protected void updateChildren() {
+    public void updateChildren() {
         GuiUtils.setupStencilMask();
         GuiUtils.drawQuad(topLeftPx, bottomRightPx, UIColor.pureWhite());
         GuiUtils.setupStencilDraw();

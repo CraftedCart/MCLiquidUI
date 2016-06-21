@@ -24,7 +24,7 @@ public class UIButton extends UIComponent {
      * This is only called if this component is visible.
      */
     @Override
-    protected void updateChildren() {
+    public void updateChildren() {
         GuiUtils.setupStencilMask();
         GuiUtils.drawQuad(topLeftPx, bottomRightPx, UIColor.pureWhite());
         GuiUtils.setupStencilDraw();
@@ -33,7 +33,7 @@ public class UIButton extends UIComponent {
     }
 
     @Override
-    protected void checkMouseStateFromChildren() {
+    public void checkMouseStateFromChildren() {
         boolean checkMouseOverChildComponent = false;
 
         for (UIComponent component : childUiComponents) { //Loop through every component

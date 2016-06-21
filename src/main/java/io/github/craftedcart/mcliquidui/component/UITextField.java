@@ -6,6 +6,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -22,6 +23,7 @@ public class UITextField extends UIComponent {
 
     public UIAction onTabAction;
     public UIAction onReturnAction;
+    public UIAction onChangedAction;
 
     /**
      * Create a new UITextField by calling this<br>
@@ -44,7 +46,7 @@ public class UITextField extends UIComponent {
      * This is called every frame
      */
     @Override
-    protected void onUpdate() {
+    public void onUpdate() {
         super.onUpdate();
 
         if (selected) {
@@ -109,6 +111,8 @@ public class UITextField extends UIComponent {
                                     cursorPos--;
                                 }
                             }
+
+                            onChangedAction.execute();
                         }
                     } else if (currentKey == Keyboard.KEY_DELETE) { //Forwards delete
                         if (cursorPos < value.length()) {
@@ -127,6 +131,8 @@ public class UITextField extends UIComponent {
                                     value = new StringBuilder(value).deleteCharAt(cursorPos + 1).toString();
                                 }
                             }
+
+                            onChangedAction.execute();
                         }
                     } else if (currentKey == Keyboard.KEY_RETURN) { //Return
                         if (onReturnAction != null) {
@@ -183,6 +189,8 @@ public class UITextField extends UIComponent {
                     } else if (Pattern.matches("[A-Za-z0-9\\s_\\+\\-\\.,!@#\\$%\\^&\\*\\(\\);\\\\/\\|<>\"'\\[\\]\\?=:]", String.valueOf(Keyboard.getEventCharacter()))) {
                         value = new StringBuilder(value).insert(cursorPos, currentKeyChar).toString();
                         cursorPos++;
+
+                        onChangedAction.execute();
                     }
                 }
             }
@@ -251,7 +259,7 @@ public class UITextField extends UIComponent {
      * This is only called if this component is visible.
      */
     @Override
-    protected void updateChildren() {
+    public void updateChildren() {
         GuiUtils.setupStencilMask();
         GuiUtils.drawQuad(topLeftPx, bottomRightPx, UIColor.pureWhite());
         GuiUtils.setupStencilDraw();
@@ -281,6 +289,13 @@ public class UITextField extends UIComponent {
     }
 
     /**
+     * @param onChangedAction An action to execute when the value is changed
+     */
+    public void setOnChangedAction(UIAction onChangedAction) {
+        this.onChangedAction = onChangedAction;
+    }
+
+    /**
      * Sets the value of the text field to an empty string
      */
     public void clearValue() {
@@ -288,4 +303,11 @@ public class UITextField extends UIComponent {
         cursorPos = 0;
     }
 
+    public void setValue(String value) {
+        if (!Objects.equals(value, this.value)) {
+            this.value = value;
+
+            onChangedAction.execute();
+        }
+    }
 }

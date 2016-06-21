@@ -49,7 +49,7 @@ public class UIProgressBar extends UIComponent {
      * This is only called if this component is visible.
      */
     @Override
-    protected void updateChildren() {
+    public void updateChildren() {
         GuiUtils.setupStencilMask();
         GuiUtils.drawQuad(topLeftPx, bottomRightPx, UIColor.pureWhite());
         GuiUtils.setupStencilDraw();

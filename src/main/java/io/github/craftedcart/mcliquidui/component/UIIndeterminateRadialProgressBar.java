@@ -34,7 +34,7 @@ public class UIIndeterminateRadialProgressBar extends UIRadialProgressBar {
      * This is called every frame
      */
     @Override
-    protected void onUpdate() {
+    public void onUpdate() {
         super.onUpdate();
 
         rotationalOffset += GuiUtils.getDelta() * 200;

@@ -1,6 +1,10 @@
 package io.github.craftedcart.mcliquidui.component;
 
 import io.github.craftedcart.mcliquidui.util.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,12 +42,10 @@ public class UIListBox extends UIComponent {
      * This is called every frame
      */
     @Override
-    protected void onUpdate() {
+    public void onUpdate() {
         super.onUpdate();
 
-        if (mouseOver || mouseOverChildComponent) {
-            targetScrollY = Math.min(Math.max(targetScrollY + GuiUtils.getMouseDWheel(), height - getTotalHeightOfComponents()), 0);
-        }
+        targetScrollY = Math.min(Math.max(targetScrollY + GuiUtils.getMouseDWheel(), height - getTotalHeightOfComponents()), 0);
 
         pointOffset.y = MathUtils.lerp(pointOffset.y, targetScrollY, Math.min(GuiUtils.getDelta() * 20, 1));
 
@@ -92,13 +94,15 @@ public class UIListBox extends UIComponent {
     public void reorganiseItems() {
         double totalHeight = 0;
         for (int i = 0; i < componentMap.size(); i++) {
-            PosXY currentTopLeft = componentMap.get(componentNumberIDs.get(i)).topLeftPoint;
-            PosXY currentBottomRight = componentMap.get(componentNumberIDs.get(i)).bottomRightPoint;
+            if (componentMap.get(componentNumberIDs.get(i)).visible) {
+                PosXY currentTopLeft = componentMap.get(componentNumberIDs.get(i)).topLeftPoint;
+                PosXY currentBottomRight = componentMap.get(componentNumberIDs.get(i)).bottomRightPoint;
 
-            componentMap.get(componentNumberIDs.get(i)).bottomRightPoint = new PosXY(currentBottomRight.x, currentBottomRight.y - currentTopLeft.y + totalHeight);
-            componentMap.get(componentNumberIDs.get(i)).topLeftPoint = new PosXY(currentTopLeft.x, totalHeight);
+                componentMap.get(componentNumberIDs.get(i)).bottomRightPoint = new PosXY(currentBottomRight.x, currentBottomRight.y - currentTopLeft.y + totalHeight);
+                componentMap.get(componentNumberIDs.get(i)).topLeftPoint = new PosXY(currentTopLeft.x, totalHeight);
 
-            totalHeight = componentMap.get(componentNumberIDs.get(i)).bottomRightPoint.y;
+                totalHeight = componentMap.get(componentNumberIDs.get(i)).bottomRightPoint.y;
+            }
         }
     }
 
@@ -109,11 +113,23 @@ public class UIListBox extends UIComponent {
      * This is only called if this component is visible.
      */
     @Override
-    protected void updateChildren() {
+    public void updateChildren() {
         GuiUtils.setupStencilMask();
         GuiUtils.drawQuad(topLeftPx, bottomRightPx, UIColor.pureWhite());
         GuiUtils.setupStencilDraw();
-        super.updateChildren();
+
+        for (int i = 0; i < childUiComponents.size(); i++) { //Loop through every component
+            UIComponent component = childUiComponents.get(i);
+            if (component != null && component.visible) {
+                component.calcPos();
+
+                if (component.topLeftPx.y <= bottomRightPx.y &&
+                        component.bottomRightPx.y >= topLeftPx.y) {
+                    component.onUpdate();
+                }
+            }
+        }
+
         GuiUtils.setupStencilEnd();
     }
 
@@ -137,7 +153,7 @@ public class UIListBox extends UIComponent {
     public double getTotalHeightOfComponents() {
         double totalHeight = 0;
         for (UIComponent uiComponent : childUiComponents) {
-            if (uiComponent != null) {
+            if (uiComponent != null && uiComponent.visible) {
                 totalHeight += uiComponent.height;
             }
         }

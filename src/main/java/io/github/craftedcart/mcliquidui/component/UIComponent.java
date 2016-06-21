@@ -171,7 +171,7 @@ public class UIComponent {
     /**
      * This is called every frame
      */
-    protected void onUpdate() {
+    public void onUpdate() {
 
         final int h = Display.getHeight(); //Get the height of the display
 
@@ -219,7 +219,7 @@ public class UIComponent {
      * <br>
      * This is only called if this component is visible.
      */
-    protected void updateChildren() {
+    public void updateChildren() {
         for (int i = 0; i < childUiComponents.size(); i++) { //Loop through every component
             UIComponent component = childUiComponents.get(i);
             if (component != null) {
@@ -231,7 +231,7 @@ public class UIComponent {
     /**
      * Checks to see if the mouse is over, and whether or not LMB is down, or over a child component
      */
-    protected void checkMouseStateFromChildren() {
+    public void checkMouseStateFromChildren() {
         boolean checkMouseOverChildComponent = false;
 
         for (int i = 0, childUiComponentsSize = childUiComponents.size(); i < childUiComponentsSize; i++) {
@@ -402,7 +402,7 @@ public class UIComponent {
      * Calculates the pixel position from anchor points and regular points, as well as determine the width and height
      * of this component.
      */
-    protected void calcPos() {
+    public void calcPos() {
         topLeftPx = new PosXY(
                 parentComponent.width * topLeftAnchor.xPercent + topLeftPoint.x + parentComponent.topLeftPx.x + parentComponent.pointOffset.x,
                 parentComponent.height * topLeftAnchor.yPercent + topLeftPoint.y + parentComponent.topLeftPx.y + parentComponent.pointOffset.y
