@@ -45,7 +45,12 @@ public class UIListBox extends UIComponent {
     public void onUpdate() {
         super.onUpdate();
 
-        targetScrollY = Math.min(Math.max(targetScrollY + GuiUtils.getMouseDWheel(), height - getTotalHeightOfComponents()), 0);
+        double scrollToAdd = 0;
+        if (isMouseOver() || isMouseOverChildComponent()) {
+            scrollToAdd = GuiUtils.getMouseDWheel();
+        }
+
+        targetScrollY = Math.min(Math.max(targetScrollY + scrollToAdd, height - getTotalHeightOfComponents()), 0);
 
         pointOffset.y = MathUtils.lerp(pointOffset.y, targetScrollY, Math.min(GuiUtils.getDelta() * 20, 1));
 
